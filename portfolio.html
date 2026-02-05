@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- SEO Meta Tags -->
+    <title>Portfolio | OzisTech - Web Design for Australian Businesses</title>
+    <meta name="description" content="View our portfolio of high-converting websites built for Australian businesses. From tradies to home services, we design sites that turn ad clicks into leads.">
+    <meta name="keywords" content="web design portfolio, Australian websites, small business websites, conversion-focused design, mobile-first websites">
+    <meta name="author" content="OzisTech">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ozistech.com.au/portfolio">
+    <meta property="og:title" content="Our Work | OzisTech Web Design">
+    <meta property="og:description" content="Real websites we've built for real Australian businesses. See our conversion-focused designs in action.">
+    <meta property="og:image" content="assets/og-image.jpg">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Portfolio Page Specific Styles */
+        .portfolio-hero {
+            padding: calc(100px + var(--space-3xl)) 0 var(--space-3xl);
+            background: var(--bg-dark);
+            text-align: center;
+        }
+
+        .portfolio-hero h1 {
+            margin-bottom: var(--space-md);
+        }
+
+        .portfolio-hero p {
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto var(--space-xl);
+        }
+
+        .portfolio-filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .filter-btn {
+            padding: var(--space-sm) var(--space-lg);
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-full);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .portfolio-page-section {
+            padding: 0 0 var(--space-4xl);
+            background: var(--bg-dark);
+        }
+
+        .portfolio-detailed-card {
+            display: grid;
+            gap: var(--space-2xl);
+            padding: var(--space-2xl);
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: var(--space-2xl);
+        }
+
+        @media (min-width: 768px) {
+            .portfolio-detailed-card {
+                grid-template-columns: 1.2fr 1fr;
+                align-items: center;
+            }
+
+            .portfolio-detailed-card:nth-child(even) {
+                direction: rtl;
+            }
+
+            .portfolio-detailed-card:nth-child(even) > * {
+                direction: ltr;
+            }
+        }
+
+        .portfolio-image-wrapper {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 16/10;
+            background: var(--bg-card-hover);
+        }
+
+        .portfolio-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform var(--transition-slow);
+        }
+
+        .portfolio-detailed-card:hover .portfolio-image-wrapper img {
+            transform: scale(1.03);
+        }
+
+        .portfolio-details h2 {
+            font-size: 1.75rem;
+            margin-bottom: var(--space-sm);
+        }
+
+        .portfolio-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-bottom: var(--space-lg);
+        }
+
+        .portfolio-meta span {
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .portfolio-meta .niche-tag {
+            padding: var(--space-xs) var(--space-sm);
+            background: var(--gradient-glow);
+            color: var(--primary);
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+        }
+
+        .portfolio-description {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-lg);
+            line-height: 1.7;
+        }
+
+        .features-list {
+            display: grid;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-xl);
+        }
+
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            color: var(--text-secondary);
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .portfolio-cta-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+
+        .cta-banner {
+            padding: var(--space-3xl);
+            background: linear-gradient(135deg, rgba(0, 180, 216, 0.1) 0%, var(--bg-card) 100%);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(0, 180, 216, 0.2);
+            text-align: center;
+            margin-top: var(--space-2xl);
+        }
+
+        .cta-banner h2 {
+            margin-bottom: var(--space-md);
+        }
+
+        .cta-banner p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto var(--space-xl);
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="OzisTech Logo" class="logo-img">
+                <span class="logo-text">OzisTech</span>
+            </a>
+            <div class="nav-links" id="nav-links">
+                <a href="index.html#services">Services</a>
+                <a href="portfolio.html" class="active">Portfolio</a>
+                <a href="index.html#pricing">Pricing</a>
+                <a href="index.html#faq">FAQ</a>
+                <a href="index.html#contact" class="nav-cta">Get a Quote</a>
+            </div>
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== PORTFOLIO HERO ========== -->
+    <section class="portfolio-hero">
+        <div class="container">
+            <h1>Our Work</h1>
+            <p>Real websites we've built for real Australian businesses. Each one designed to convert visitors into leads.</p>
+            
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="auto">Auto Services</button>
+                <button class="filter-btn" data-filter="home">Home Services</button>
+                <button class="filter-btn" data-filter="trades">Trades</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PORTFOLIO GRID ========== -->
+    <section class="portfolio-page-section">
+        <div class="container">
+            <!-- TW Auto Detailing -->
+            <article class="portfolio-detailed-card" data-category="auto">
+                <div class="portfolio-image-wrapper">
+                    <img src="https://api.microlink.io/?url=https://twautodetailing.au/&screenshot=true&meta=false&embed=screenshot.url" alt="TW Auto Detailing Website Screenshot" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 500%22><rect fill=%22%231a1a2e%22 width=%22800%22 height=%22500%22/><text fill=%22%2300b4d8%22 x=%22400%22 y=%22250%22 text-anchor=%22middle%22 font-family=%22Inter%22 font-size=%2232%22>TW Auto Detailing</text></svg>'">
+                </div>
+                <div class="portfolio-details">
+                    <div class="portfolio-meta">
+                        <span class="niche-tag">Auto Detailing</span>
+                        <span>📍 Australia</span>
+                    </div>
+                    <h2>TW Auto Detailing</h2>
+                    <p class="portfolio-description">
+                        A sleek, mobile-first website designed for a professional auto detailing business. The focus was on easy booking and showcasing their services with stunning visuals.
+                    </p>
+                    <ul class="features-list">
+                        <li>Mobile-optimised booking flow</li>
+                        <li>Fast load times under 3 seconds</li>
+                        <li>Service showcase with pricing</li>
+                        <li>Before/after gallery integration</li>
+                        <li>Meta Pixel tracking ready</li>
+                    </ul>
+                    <div class="portfolio-cta-group">
+                        <a href="https://twautodetailing.au/" target="_blank" rel="noopener" class="btn btn-outline">Visit Live Site</a>
+                        <a href="index.html#contact" class="btn btn-primary">Request Similar Site</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Aussie Blinds -->
+            <article class="portfolio-detailed-card" data-category="home">
+                <div class="portfolio-image-wrapper">
+                    <img src="https://api.microlink.io/?url=https://aussieblinds.site/&screenshot=true&meta=false&embed=screenshot.url" alt="Aussie Blinds Website Screenshot" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 500%22><rect fill=%22%231a1a2e%22 width=%22800%22 height=%22500%22/><text fill=%22%2300b4d8%22 x=%22400%22 y=%22250%22 text-anchor=%22middle%22 font-family=%22Inter%22 font-size=%2232%22>Aussie Blinds</text></svg>'">
+                </div>
+                <div class="portfolio-details">
+                    <div class="portfolio-meta">
+                        <span class="niche-tag">Blinds & Shutters</span>
+                        <span>📍 Australia</span>
+                    </div>
+                    <h2>Aussie Blinds</h2>
+                    <p class="portfolio-description">
+                        Clean, conversion-focused website for a blinds and shutters business. Designed to capture quote requests from both organic and paid traffic sources.
+                    </p>
+                    <ul class="features-list">
+                        <li>Clear service categorisation</li>
+                        <li>Quote-focused layout</li>
+                        <li>Product gallery with options</li>
+                        <li>Mobile-responsive design</li>
+                        <li>SEO-optimised pages</li>
+                    </ul>
+                    <div class="portfolio-cta-group">
+                        <a href="https://aussieblinds.site/" target="_blank" rel="noopener" class="btn btn-outline">Visit Live Site</a>
+                        <a href="index.html#contact" class="btn btn-primary">Request Similar Site</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Built Better Homes -->
+            <article class="portfolio-detailed-card" data-category="home trades">
+                <div class="portfolio-image-wrapper">
+                    <img src="https://api.microlink.io/?url=https://www.builtbetterhomes.com.au/&screenshot=true&meta=false&embed=screenshot.url" alt="Built Better Homes Website Screenshot" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 500%22><rect fill=%22%231a1a2e%22 width=%22800%22 height=%22500%22/><text fill=%22%2300b4d8%22 x=%22400%22 y=%22250%22 text-anchor=%22middle%22 font-family=%22Inter%22 font-size=%2232%22>Built Better Homes</text></svg>'">
+                </div>
+                <div class="portfolio-details">
+                    <div class="portfolio-meta">
+                        <span class="niche-tag">Home Building</span>
+                        <span>📍 Australia</span>
+                    </div>
+                    <h2>Built Better Homes</h2>
+                    <p class="portfolio-description">
+                        Premium website for a home building company. Designed to establish trust and credibility while driving consultation bookings from prospective homeowners.
+                    </p>
+                    <ul class="features-list">
+                        <li>Premium visual design</li>
+                        <li>Project portfolio showcase</li>
+                        <li>SEO-optimised structure</li>
+                        <li>Lead capture forms</li>
+                        <li>Trust-building elements</li>
+                    </ul>
+                    <div class="portfolio-cta-group">
+                        <a href="https://www.builtbetterhomes.com.au/" target="_blank" rel="noopener" class="btn btn-outline">Visit Live Site</a>
+                        <a href="index.html#contact" class="btn btn-primary">Request Similar Site</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- JA Pressure AU -->
+            <article class="portfolio-detailed-card" data-category="trades">
+                <div class="portfolio-image-wrapper">
+                    <img src="https://api.microlink.io/?url=https://www.japressureau.com.au/&screenshot=true&meta=false&embed=screenshot.url" alt="JA Pressure AU Website Screenshot" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 500%22><rect fill=%22%231a1a2e%22 width=%22800%22 height=%22500%22/><text fill=%22%2300b4d8%22 x=%22400%22 y=%22250%22 text-anchor=%22middle%22 font-family=%22Inter%22 font-size=%2232%22>JA Pressure AU</text></svg>'">
+                </div>
+                <div class="portfolio-details">
+                    <div class="portfolio-meta">
+                        <span class="niche-tag">Pressure Washing</span>
+                        <span>📍 Australia</span>
+                    </div>
+                    <h2>JA Pressure AU</h2>
+                    <p class="portfolio-description">
+                        High-converting website for a pressure washing service. Built specifically to work with Meta Ads campaigns, focusing on quick quote requests from local customers.
+                    </p>
+                    <ul class="features-list">
+                        <li>Service area targeting</li>
+                        <li>Conversion-focused CTAs</li>
+                        <li>Before/after imagery</li>
+                        <li>Mobile-first design</li>
+                        <li>Fast page speed</li>
+                    </ul>
+                    <div class="portfolio-cta-group">
+                        <a href="https://www.japressureau.com.au/" target="_blank" rel="noopener" class="btn btn-outline">Visit Live Site</a>
+                        <a href="index.html#contact" class="btn btn-primary">Request Similar Site</a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- CTA Banner -->
+            <div class="cta-banner">
+                <h2>Ready to Get a Site Like These?</h2>
+                <p>We build high-converting websites for Australian businesses. Let's discuss your project.</p>
+                <a href="index.html#contact" class="btn btn-primary">Get Your Free Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="index.html" class="logo">
+                        <img src="assets/logo.png" alt="OzisTech Logo" class="logo-img">
+                        <span class="logo-text">OzisTech</span>
+                    </a>
+                    <p>High-converting websites built for Australian businesses running Meta Ads.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <a href="index.html#services">Services</a>
+                        <a href="portfolio.html">Portfolio</a>
+                        <a href="index.html#pricing">Pricing</a>
+                        <a href="index.html#faq">FAQ</a>
+                        <a href="index.html#contact">Contact</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <a href="index.html#services">Landing Pages</a>
+                        <a href="index.html#services">Business Websites</a>
+                        <a href="index.html#services">Redesigns</a>
+                        <a href="index.html#services">Speed Optimisation</a>
+                        <a href="index.html#services">Tracking Setup</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Contact</h4>
+                        <a href="mailto:hello@ozistech.com.au">hello@ozistech.com.au</a>
+                        <a href="tel:+61400000000">0400 000 000 [Update]</a>
+                        <p class="footer-abn">ABN: [Your ABN Here]</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 OzisTech. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+    <script>
+        // Portfolio filter functionality
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Update active state
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const filter = this.dataset.filter;
+                const cards = document.querySelectorAll('.portfolio-detailed-card');
+
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category.includes(filter)) {
+                        card.style.display = 'grid';
+                        card.style.animation = 'fadeInUp 0.5s ease forwards';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -495,3 +495,69 @@ function initHeroShowcase() {
 }
 
 initHeroShowcase();
+
+/**
+ * Scroll Reveal Animations
+ */
+function initScrollReveal() {
+    const revealElements = document.querySelectorAll('.service-card, .portfolio-card, .pricing-card, .why-item, .process-step, .faq-item');
+    
+    if (revealElements.length === 0) return;
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+}
+
+// Initialize scroll reveal
+initScrollReveal();
+
+/**
+ * Counter Animation for Metrics
+ */
+function initCounterAnimation() {
+    const counters = document.querySelectorAll('.metric-number[data-count]');
+    
+    if (counters.length === 0) return;
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const target = parseInt(entry.target.dataset.count);
+                animateCounter(entry.target, target);
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => counterObserver.observe(counter));
+}
+
+function animateCounter(element, target) {
+    let current = 0;
+    const increment = target / 50;
+    const duration = 1500;
+    const stepTime = duration / 50;
+
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            element.textContent = target + '+';
+            clearInterval(timer);
+        } else {
+            element.textContent = Math.floor(current) + '+';
+        }
+    }, stepTime);
+}
+
+initCounterAnimation();

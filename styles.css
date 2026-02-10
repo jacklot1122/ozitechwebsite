@@ -1253,8 +1253,7 @@ h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
 .pricing-card.featured {
     border-color: var(--primary);
     background: linear-gradient(180deg, rgba(0, 180, 216, 0.08) 0%, var(--bg-card) 100%);
-    padding-top: calc(var(--space-xl) + 20px);
-    margin-top: 20px;
+    padding-top: calc(var(--space-xl) + 24px);
 }
 
 .pricing-features {
@@ -1413,16 +1412,16 @@ h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
         grid-template-columns: repeat(3, 1fr);
         align-items: stretch;
         overflow: visible;
-        padding-top: 20px;
+        padding-top: 24px;
     }
     
     .pricing-card.featured {
-        transform: scale(1.03);
+        transform: none;
         z-index: 2;
     }
     
     .pricing-card.featured:hover {
-        transform: scale(1.05);
+        transform: translateY(-5px);
     }
 }
 

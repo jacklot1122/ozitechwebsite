@@ -278,7 +278,8 @@ function initFormValidation() {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    // Success
+                    // Success - fire Meta Pixel Lead event
+                    if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); }
                     submitBtn.innerHTML = `
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-icon" style="width: 20px; height: 20px;">
                             <polyline points="20,6 9,17 4,12"></polyline>
